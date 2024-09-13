@@ -1,0 +1,77 @@
+                                 <!--черный фон-->
+      
+       
+    
+         {% extends "index.html" %}
+
+         {% block navigation %}
+            <a class="text-center navigtour" href="{{url_for('Dota_Tournaments')}}">Турниры</a>
+            <a class="text-center navignews" href="{{url_for('Dota_Players')}}">Игроки</a>
+            <a class="text-center navigtour" href="{{url_for('Dota_Teams')}}">Команды</a>
+          {% endblock navigation %}
+         {% block content%}
+      
+        
+          <div class="logo row">
+            
+              <div class="teams col-2" id="div-with-bg" > <img   src="{{ team['ImgSrc'] }}" width="50%">
+              <div class="team">{{ team['TeamName']  }}</div>
+              </div>
+            
+              <div class="biog col-7"><u>СТРАНА: {{ team['Location'] }}</u> <br><u>ТРЕНЕР: {{ Coach['Nickname'] }}</u><br><u>КАПИТАН: {{ Captain['Nickname'] }}</u><br>
+                  <u>БИО: {{ team['Bio'] }}</u>
+                 </div>
+                 
+                 <div class="tnews text-center col"> <u>НОВОСТЬ</u> <br><u>НОВОСТЬ</u> <br> <u>НОВОСТЬ</u> <br> <u>НОВОСТЬ</u><br> <u>НОВОСТЬ</u><br> <u>НОВОСТЬ</u><br> <u>НОВОСТЬ</u><br> <u>НОВОСТЬ</u><br> <u>НОВОСТЬ</u><br> <u>НОВОСТЬ</u>
+                 </div>
+          
+            
+      
+      </div>
+         
+      <div class="members text-center"> СОСТАВ КОМАНДЫ</div>
+      <div class="tmembers text-center"> 
+        {% for player in list_tp %}
+        <div class="tm">
+          <a class="tm" href="{{ url_for('Dota_Player', idplayer = player['idPlayer']) }}">
+            {{ player['Nickname'] }}
+            <img src="{{ player['ImgSrc'] }}" width="50px">
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+     
+    <div class="lastgame text-center">ПОСЛЕДНИЕ ИГРЫ</div>
+      <div class="lgzone">
+        <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div>
+        <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div>         
+        <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div>          
+        <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div> 
+          <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div>
+          <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div>         
+          <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div>          
+          <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div>          
+          <div class="lg text-center"><img src="{{ url_for('static', filename='#')}}" width="5%">&nbsp; СЧЕТ&nbsp;<img src="{{ url_for('static', filename='#')}}" width="5%"> </div><br>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+         {% endblock content%}

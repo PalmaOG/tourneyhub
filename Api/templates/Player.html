@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block navigation %}
+    <a class="text-center navigtour" href="{{url_for('Dota_Tournaments')}}">Турниры</a>
+    <a class="text-center navignews" href="{{url_for('Dota_Players')}}">Игроки</a>
+    <a class="text-center navigtour" href="{{url_for('Dota_Teams')}}">Команды</a>
+{% endblock navigation %}
+
+{% block content%}
+<div class=" p1">
+{% if player['ImgSrc'] != none %}
+<img src="{{ player['ImgSrc'] }}"  width="14%" height="auto" style="margin: 10px;">
+
+{% else %}
+<img src="{{ url_for('static', filename='img/avatar.png') }}"  width="14%" height="auto">
+{% endif %}
+
+    &nbsp;
+    <img src="{{ url_for('static', filename='img/dota.png') }}" width="3%" height="auto">  &nbsp; 
+    
+
+
+<div class="infor"> Никнейм: {{ player['Nickname'] }}<br>Команда: {{ TeamName['TeamName'] }} <br>ФИО: {{player['FirstName']}} {{player['SecondName']}} <br> СТРАНА: {{player['Country']}}</div>
+<hr size="10">
+<div class="pnews text-center"> {{ player['Bio'] }}</div>
+
+
+</div>
+
+{% endblock content%}

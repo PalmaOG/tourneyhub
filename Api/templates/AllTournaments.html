@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block navigation %}
+    <a class="text-center navigtour" href="{{url_for('Dota_Tournaments')}}">Турниры</a>
+    <a class="text-center navignews" href="{{url_for('Dota_Players')}}">Игроки</a>
+    <a class="text-center navigtour" href="{{url_for('Dota_Teams')}}">Команды</a>
+{% endblock navigation %}
+
+{% block content%}
+<div class="text-center sh" role="search" method="get" action="/search">
+    <input  id="searchInput" class="search" placeholder="поиск" type="search" name="search-text" />
+    <button onclick="searchTextOnPage()" >Search</button>
+</div>
+
+<div class="tours text-center"> ТУРНИРЫ</div>
+<div class="list container"> 
+    <div class="row">
+      {% for tournament in list_tournaments %}
+      <a class="col-2 tour" href="{{ url_for('Dota_Tournament', idTournament = tournament['idTournament']) }}">
+        <figure class="touri">
+          {% if tournament['ImgSrc'] != none %}
+          <img class="im" src="{{ tournament['ImgSrc'] }}" width="100%" height="auto">
+          {% else %}
+          <img class="im" src="https://static.cybersport.ru/assets/img/player.187f655.png" width="100%" height="auto">
+          {% endif %}
+          <figcaption class="tc text-center">
+            <b>{{ tournament['Name'] }}</b>
+          </figcaption>
+        </figure>
+      </a>
+      {% endfor %}
+      
+    </div>
+  </div> 
+
+{% endblock content%}

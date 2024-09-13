@@ -1,0 +1,57 @@
+{% extends "index.html" %}
+
+{% block navigation %}
+   
+{% endblock navigation %}
+
+{% block content %}
+<div class="bgimage" width="100%" height="80px" style="overflow-y: unset;">
+  <div class="profil">
+    <div class="row align-items-start" >
+      
+      <div class="bgimage col-3" style="opacity: 0%;"></div>
+
+      <div class="col" style="background-color: rgb(226, 226, 226); height: 939px;border-top-left-radius: 10px;border-top: 5px solid black ; border-left: 5px solid black;position: relative; top: 30px;" >
+        <img id="profilePhoto" class="photopro" src="{{ info['AvatarSrc'] }}" width="140px" height="140px" style="margin-left: 80px; overflow: hidden; object-fit: cover;">
+        <button id="addphoto" style="margin-top: 30px; margin-left: 75px; display: none;">Сменить фото</button><br>
+        <div style="font-size: 30px;width: 70%; text-align: center;" id="nick_name">{{ info['Nickname'] }}</div><br>
+        <div style="font-size: 20px;width: 70%; text-align: center;" id="nick_name1">
+          <p>{{ info['LastName'] }} {{ info['FirstName'] }}</p>
+          <p>День рождения: {{ info['Birth'] }}</p>
+          <p>Ник Discord: {{ info['Discord'] }}</p>
+          <p>Дата регистрации <br> {{ info['RegDate'] }}</p>
+        </div><br>
+        {% if info['idUser'] == session['ID'] %}
+        <button id="editButton" style="margin-left: 70px;">Редактировать</button>
+          <button id="undoButton" style="display:none;margin-left: 105px; ">Отмена</button>
+        {% endif %}
+      </div>
+      
+      <div class="col " style="background-color: rgb(226, 226, 226); height: 939px;border-top-right-radius: 10px;border-top: 5px solid black ; border-right: 5px solid black;position: relative; top: 30px;">
+        <form action="{{ url_for('Update_Info', idProfile = info['idUser']) }}" method="POST" enctype="multipart/form-data" class="formprof" id="formprof" style="display: none;" >
+
+          <input type="file" id="ShowExp" name="file" style="margin-bottom: 2%; display: none;" accept=".jpg" disabled>
+          <input type="text" name="idProfile" value="{{ id }}" hidden>
+          <label for="Fname">Имя</label>
+          <input class="nick" type="text" id="Fname" name="Fname" placeholder="Введите имя" value="{{ info['FirstName'] }}" disabled>
+          <label for="Lname">Фамилия</label>
+          <input class="nick" type="text" id="Lname" name="Lname" placeholder="Введите фамилию" value="{{ info['LastName'] }}" disabled>
+          <label for="Birth">Дата рождения</label>
+          <input class="nick" type="date" id="Birth" name="Birth"value="{{ info['Birth'] }}" disabled>
+          <label for="Discord">Discord</label>
+          <input class="nick" type="text" id="Discord" name="Discord" placeholder="Введите никнейм площадки Discord" value="{{ info['Discord'] }}" disabled>
+          <label for="Nickname">Никнейм</label>
+          <input class="nick" type="text" id="Nickname" name="Nickname" placeholder="Введите никнейм" value="{{ info['Nickname'] }}" disabled>
+          <label for="Email">Электронная почта</label>
+          <input class="nick" type="email" id="Email" name="Email" placeholder="Введите почту" value="{{ info['Email'] }}" disabled>
+          <input type="submit" value="Сохранить" id="submitButton" style="display:none;" >
+        </form>
+          
+      </div>
+      <div class="bgimage1 col-3" style="opacity: 0%;"></div> 
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}

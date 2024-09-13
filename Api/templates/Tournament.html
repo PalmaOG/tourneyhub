@@ -1,0 +1,44 @@
+{% extends "index.html" %}
+
+{% block navigation %}
+    <a class="text-center navigtour" href="{{url_for('Dota_Tournaments')}}">Турниры</a>
+    <a class="text-center navignews" href="{{url_for('Dota_Players')}}">Игроки</a>
+    <a class="text-center navigtour" href="{{url_for('Dota_Teams')}}">Команды</a>
+{% endblock navigation %}
+
+{% block content%}
+
+<figure class="tournament text-center ">
+  {% if tournament['ImgSrc'] != none %}
+  <img src="{{ url_for('static', filename='#') }}" width="8%">
+  {% else %}
+  <img src="{{ url_for('static', filename='img/avatar.png') }}" width="8%">
+  {% endif %}
+  <figcaption>{{ tournament['Name'] }}</figcaption>
+</figure>
+<div class=" text-center biogt"> Информация</div>
+<div class="container">
+    <div class="row">
+      <div class="col-7 memberzone">
+        УЧАСТНИКИ
+        {% for i in list_members%}
+        <div class="memberstour">{{i['idTeam']}} <img src="{{ url_for('static', filename='#') }}" width="7%"></div>
+        {% endfor %}
+      </div>
+      <div class="col-3 newstour text-center "><br>
+        <div class="newstour1"> 
+            НОВОСТь </div><br>
+            <div class="newstour1"> 
+                НОВОСТь </div><br>
+                <div class="newstour1"> 
+                    НОВОСТь </div><br>
+                    <div class="newstour1"> 
+                        НОВОСТь </div><br>
+                      
+
+        
+      </div>
+     
+    </div>
+  </div>
+{% endblock content%}

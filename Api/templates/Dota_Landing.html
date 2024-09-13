@@ -1,0 +1,78 @@
+{% extends "index.html" %}
+
+
+
+{% block content%}
+
+<div id="Games">
+    <a href="{{url_for('Dota_Players')}}">
+       <div class="black-block">   
+          <div class="Games-variant">
+             <img src="{{ url_for('static', filename='img/players_placeholder.jpg')}}">
+          </div>
+          <div class="bottom-left">
+             <h2>Игроки</h2>
+          </div>
+       </div>
+    </a>
+    <a href="{{url_for('Dota_Teams')}}">
+       <div class="black-block">
+          <div class="Games-variant">
+             <img src="{{ url_for('static', filename='img/teams_placeholder.jpg')}}">
+          </div>
+          <div class="bottom-left">
+             <h3>Команды</h3>
+          </div>
+       </div>
+    </a>
+    <a href="{{url_for('Dota_Tournaments')}}">
+       <div class="black-block"> 
+          <div class="Games-variant">
+             <img src="{{ url_for('static', filename='img/tournaments_placeholder.jpg')}}">   
+          </div>
+          <div class="bottom-left">
+             <h2>Турниры</h2>
+          </div>
+       </div>
+    </a>
+    
+ </div>
+ <div class="LiveMatches">
+   <div class="LiveMatches-block">
+       <p style="margin: 5px;border-bottom: 2px solid gray; text-align: center;">Матчи в эфире:</p>
+       {% if list_live_matches%}
+           {% for match in list_live_matches %}
+           <div class="LiveMatches-one-match">
+               <a href="{{ url_for('Dota_Match', idMatch = match['idMatch'] ) }}">
+                   <div class="LiveMatches-match">
+                       <img src="{{ url_for('static', filename='img/dota.png')}}" style="height: 50px; margin-top: 5px; ">
+                       <object style="height: min-content;">
+                           {% for i in list_teams %}
+
+                           {% if i['AltName'] ==  match['FirstTeam'] %}
+                           <a href="{{ url_for('Dota_Team', idTeam = i['idTeam'])}}">{{ i['TeamName'] }}</a>
+                           {% endif %}
+                           {% endfor %}
+
+                           <span>{{ match['FirstTeamScore'] }}:{{ match['SecondTeamScore'] }}</span>
+                           
+                           {% for i in list_teams %}
+                           {% if i['AltName'] ==  match['SecondTeam'] %}
+                           <a href="{{ url_for('Dota_Team', idTeam = i['idTeam']) }}">{{ i['TeamName'] }}</a>
+
+                           {% endif %}
+                           {% endfor %}
+                       </object>
+                        
+                   </div>
+               </a>
+           </div>
+           {% endfor %}
+       {% else %}
+           <div class="text-muted" style="text-align: center; font-size: xx-large; margin: 5px;">Нет матчей</div>
+       {% endif %}
+   </div>
+</div>
+
+
+{% endblock content%}

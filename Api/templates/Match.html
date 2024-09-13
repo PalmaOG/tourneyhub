@@ -1,0 +1,55 @@
+{% extends "index.html" %}
+
+{% block content%}
+
+
+<div class=" infomatch ">
+  <div class="backimage1 ">
+    <p style="font-size: x-large;"><img  src="{{ Team1_info[0]['TeamSrc'] }}" height="50px" style="padding-right: 15px;">{{ Team1_info[0]['TeamName'] }}</p>
+          {% for players in Team1_info %}
+
+              
+              <div><u><a href="{{ url_for('Dota_Player', idplayer = players['idPlayer']) }}" style="color: white;">{{ players['Nickname'] }}</a></u> <img src="{{ players['ImgSrc'] }}" width="15%"></div>
+              
+
+          {% endfor %}
+  </div>
+  <div class="backimage3" >
+    <div style="font-size: 300%;">{{ match_info['FirstTeamScore'] }} : {{ match_info['SecondTeamScore'] }}</div>
+    <div style="width: min-content; display: flex; flex-direction: row; font-size: xx-large;">Счет</div>
+    
+    
+  
+  </div>
+  <div class="backimage1">
+    <p style="font-size: x-large;"><img  src="{{ Team2_info[0]['TeamSrc'] }}" height="50px" style="padding-right: 15px;">{{ Team2_info[0]['TeamName'] }}</p>
+    {% for players in Team2_info %}
+
+      
+      <div><u><a href="{{ url_for('Dota_Player', idplayer = players['idPlayer']) }}" style="color: white;">{{ players['Nickname'] }}</a></u> <img src="{{ players['ImgSrc'] }}" width="15%"></div>
+      
+
+    {% endfor %}
+    
+  </div>
+       
+  
+</div>
+  
+  
+      
+  
+    <p class="stat text-center">Трансляция Турнира</p>
+  <div class="TV">
+      <iframe
+      src="https://player.twitch.tv/?channel=esl_dota2&parent=127.0.0.1"
+      height="100%"
+      width="100%"
+      frameborder="0"
+      scrolling="no"
+      allowfullscreen="true">
+      </iframe>
+  </div>
+
+{% endblock content%}
+

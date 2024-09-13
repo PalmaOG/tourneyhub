@@ -1,0 +1,163 @@
+{# templates/index.html #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Tourneyhub</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
+</head>
+<body> 
+   
+   <div class="navig">
+      <button class="text-center  col-4 conteiner" style="background-color: transparent; border: none;"><a href="{{url_for('start')}}" style="color: white; height: 50px; font-size: 30px;">TURNEYHUB</a><img src="{{ url_for('static', filename='img/dino.png') }}" width="10%" height="auto "></button>
+      {% block navigation %}
+      
+      {% endblock navigation %}
+      
+      {% if session.get('LoggedIn') == True %}
+      <div class="dropdown">
+         <span class="text-center dropdown-toggle rounded float-end col-9 navigavt" style="color: white; width: 100px; height: 70px; margin-right: 50px;" data-bs-toggle="dropdown" aria-expanded="false">
+            <figure ><img   src="{{ session['Avatar'] }}" width="40px" height="40px" style=" margin-top: 7px; border: 2px solid #000; border-radius: 50%; box-shadow: 0 0 8px 2px rgb(176, 23, 23); overflow: hidden; object-fit: cover;"><!--<img src="{{ session['Avatar'] }}" width="20%" height="auto">--><figcaption class="sig">{{session['Username']}}</figcaption></figure>
+         </span>
+         <ul class="dropdown-menu">
+           <li><a class="dropdown-item" href="{{url_for('Profile_Page', idProfile = session['ID'] )}}" style="color: white;">Профиль</a></li>
+           <li><a class="dropdown-item" href="{{url_for('Logout')}}" style="color: white;">Выйти</a></li>
+         </ul>
+       </div>
+       <div style="position: absolute; left: 10000px" id="myBtn"></div>
+      {% else %}
+      <button class=" rounded float-end col-9 navigavt" id="myBtn" ><figure><img src="{{ url_for('static', filename='img/avatar.png') }}" width="20%" height="auto" id="myBtn" ><figcaption class="sig">SIGN IN</figcaption></figure></button>      
+      {% endif %}  
+   </div>  <!--навигация -->
+                                 <!--черный фон-->
+      <div class="content" id="content"> 
+         {% block content %}
+         
+         <div id="Games">
+            <a href="{{url_for('Dota_Page')}}">
+               <div class="black-block">   
+                  <div class="Games-variant">
+                     <img src="{{ url_for('static', filename='img/CrownFall.png')}}">
+                  </div>
+                  <div class="bottom-left">
+                     <h2>Dota 2</h2>
+                     <span>Многопользовательская онлайн-игра в жанре MOBA</span>
+                  </div>
+               </div>
+            </a>
+            <a href="{{url_for('CS_Page')}}">
+               <div class="black-block">
+                  <div class="Games-variant">
+                     <img src="{{ url_for('static', filename='img/Cs2.jpg')}}">
+                  </div>
+                  <div class="bottom-left">
+                     <h3>Counter-Strike 2</h3>
+                     <span>Захватывающий шутер от первого лица</span>
+                  </div>
+               </div>
+            </a>
+            <a href="{{url_for('Valorant_Page')}}">
+               <div class="black-block"> 
+                  <div class="Games-variant">
+                     <img src="{{ url_for('static', filename='img/Valorant.jpg')}}">   
+                  </div>
+                  <div class="bottom-left">
+                     <h2>Valorant</h2>
+                     <span>Захватывающий шутер, где важен талант и тактика.</span>
+                  </div>
+               </div>
+            </a>
+         </div>
+         
+         <div class="news">
+            <div class="mainnews text-center">ГЛАВНЫЕ НОВОСТИ</div>
+            <div class = "news-container align-items-center">
+               {% for items in news_data %}
+               <a class="anynews" href="{{url_for('PostPage', idPost= items['idPost'])}}" class="a-no-point" style="width: 50%; padding-bottom: 50px;">
+                  <div class="card">
+                     <div class="card-header">
+                     {{ items['Source']}}
+                     </div>
+                     <div class="card-body">
+                        <h5 class="card-title"><b>{{ items['Title'] }}</b></h5>
+                        <img src="{{ items['ImgSrc'] }}" class="card-img-top" alt="..." style="width: 100%; height: 50%;">
+                        <p class="card-text">{{ items['Description'] }}</p>
+                     </div>
+                     <div class="card-footer text-muted">
+                        {{items['PubDate']}}
+                     </div>
+                  </div>
+               </a>
+              
+               {% endfor %}
+             
+            </div>
+            <br/>
+              <div class="show1"> <a class="show"  id="showMore">ПОКАЗАТЬ ЕЩЕ</a></div>
+         </div>
+        
+      
+         {% endblock content %}
+         <button id="scrollToTopBtn" title="Go to top">Top</button>
+         <footer id="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-12">
+                        <div class="text-center"><p>© 2024 TURNEYHUB</p></div>
+                        <div class="text-start">
+                           <img src="{{ url_for('static', filename='img/telegram.png') }}" class="tg">@Palma_og<br>
+                           <img src="{{ url_for('static', filename='img/telegram.png') }}" class="tg">@dxrknes
+                        </div>
+                  </div>
+               </div>
+            </div>
+         </footer>
+
+         <div id="myMoodal" class="moodal"> <!--Модалка Авторизация-->
+            <div class="moodal-content">
+               <div class="moodal-header">
+                  <img src="{{ url_for('static', filename='img/avatar.png') }}" width="10%" height="auto">
+                  <span class="cloose">&times;</span>
+               </div>
+               <div class="moodal-body text-center">
+                  ВХОД
+                  <form action="{{url_for('Login')}}" method="POST">
+                  <input class="mail-address text-center" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="ЭЛЕКТРОННАЯ ПОЧТА" name="email" required/>
+                  <input class="mail-password text-center" type="password" pattern="[a-z0-9._%+-]" placeholder="ПАРОЛЬ" name="passwd" required/><br>
+                  <input type="submit" class="login" value="ВОЙТИ">  
+                  </form>
+                  <a class="forgot">ЗАБЫЛИ ПАРОЛЬ?</a>
+                  <a class="register" id="myBtn1">РЕГИСТРАЦИЯ</a>
+               </div>
+            </div>      
+         </div>                              <!--Модалка Авторизация-->
+
+         <div id="myMoodal1" class="moodal">    <!--Модалка регистрация-->
+            <div class="moodal-content">
+               <div class="moodal-header">
+                  <img src="{{ url_for('static', filename='img/avatar.png') }}" width="10%" height="auto">
+                  <span class="cloose1">&times;</span>
+               </div>
+               <div class="moodal-body text-center">
+                  РЕГИСТРАЦИЯ
+                  <form action="{{url_for('Regist')}}" method="GET">
+                     <input class="mail-address text-center" type="text" name="nick" pattern="^[a-zA-Z0-9_]{1,30}$" placeholder="Придумайте никнейм" required/>
+                     <input class="mail-address text-center" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" placeholder="ЭЛЕКТРОННАЯ ПОЧТА" required/>
+                     <input class="mail-password text-center" type="password" pattern="[a-z0-9._%+-]" name="passwd"  placeholder="ПАРОЛЬ" required/><br>
+                     <input class="login" type="submit" value="Зарегистрироваться">
+                  </form>
+                  <a class="register" id="myBtn2">ВХОД</a>
+               </div>
+            </div>      
+         </div>                                  <!--Модалка регистрация-->
+        
+  
+                             
+   
+    </div>
+   <script src="{{ url_for('static', filename='script/main.js') }}"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>    
+</body>
+</html>

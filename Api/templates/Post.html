@@ -1,0 +1,71 @@
+{% extends "index.html" %}
+
+{% block content%}
+
+<div class="card" style="width: 90%; margin-left: 5%;margin-right: 5%; margin-top: 50px;">
+    <div class="card-header">
+        <h2 class="card-title">{{ post_data['Title']}}</h2>
+        <div class="card-text text-muted">{{post_data['PubDate']}}</div>
+    </div>
+    <div class="card-body text-center">
+        <div class="cutted-img">
+            <img src="{{ post_data['ImgSrc'] }}" class="card-img-top" alt="..." style="width: 100%; position: relative; bottom: 100px;">
+        </div>
+        <div class="post-decor">
+            {{post_data['Text']}}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <br>
+            <h2 class="card-title text-center">Комментарии</h2>
+            <br>
+        </div>
+        <div class="comments">
+            <div class="comments-list" id="comm">
+                {% if comments_data %}
+                {% for items in comments_data %}
+                    <div class="one-comment">
+                        <a href="{{ url_for('Profile_Page', idProfile = items['idUser']) }}">
+                        <div class="profile">
+                            <img src="{{ items['AvatarSrc'] }}" style="width: 50px;height: 50px; border: 2px solid #000; border-radius: 50%; box-shadow: 0 0 8px 2px rgb(176, 23, 23);">
+                            <p>{{items['Nickname']}}</p>
+                        </div>
+                        </a>
+                        <div class="comment-text">
+                            {{items['Text']}}
+                        </div>
+                        <div class="comment-date">{{items['Date']}}</div>
+                    </div>
+                {% endfor %}
+
+                {% else %}
+                    <div class="container text-center text-muted" style="width: 100%;height: 300px; padding: 10%;">
+                        <h2>Еще никто не прокоментировал. Будьте первым!</h2>
+                    </div>
+                
+
+                {% endif %}
+                <br>
+                <br>
+                <br>
+            </div>
+            {% if session.get('LoggedIn') == True %}
+            <form action="{{ url_for('WriteComment', idPost = post_data['idPost'])}}" id="User-note" method="GET">
+                <input type="text" value="{{session['ID']}}"  name="user_id" hidden>
+                <div class="profile-note">
+                    <img src="{{ session['Avatar'] }}" class="prophoto" style="width: 50px; overflow: hidden; object-fit: cover;">
+                    <p>{{session['Username']}}</p>
+                </div>
+                <div class="input-group has-validation cor" >
+                    <input type="text" class="form-control" id="form_text" name="text" placeholder="Напиши, что думаешь..." autocomplete="off">
+                    <button type="submit" class="input-group-text" id="form_text" ><img src="{{url_for('static', filename = 'img/submit.png')}}" style="height: 30px;"></button>
+                </div>
+            </form>
+            {% endif %}            
+        </div>
+    </div>
+</div>
+
+
+{% endblock content%}

@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+
+{% block navigation %}
+    <a class="text-center navigtour" href="{{url_for('Dota_Tournaments')}}">Турниры</a>
+    <a class="text-center navignews" href="{{url_for('Dota_Players')}}">Игроки</a>
+    <a class="text-center navigtour" href="{{url_for('Dota_Teams')}}">Команды</a>
+{% endblock navigation %}
+
+{% block content%}
+
+
+<div class="text-center sh" role="search" method="get" action="/search">
+    <input id="searchInput" class="search" placeholder="поиск" type="search" name="search-text" />
+    <button onclick="searchTextOnPage()">Search</button>
+</div>
+<div style="width: 150px; height: 500px; border: 5px solid grey; position: fixed; margin-left:85%; top: 20vh; padding: 10px; overflow-y:scroll;">
+  <h2>Страны</h2>
+  {% for cntr in list_countries%}
+  <a href="#{{ cntr['Country'] }}"><div style="width: 100%; height: min-content; border-top: 1px solid gray; border-bottom: 1px solid gray; padding: 0px;">{{ cntr['Country'] }}</div></a><br>
+  {% endfor %}
+</div>
+<div class="tours text-center"> ИГРОКИ</div>
+<div class="list container">
+  {% for cntr in list_countries%}
+  
+  <div class="row" id="{{ cntr['Country'] }}"><p style="font-size: xx-large; text-decoration:overline underline;margin-top: 20px;"> {{ cntr['Country'] }} </p>
+    {% for player in list_players%}
+    {% if player['Country'] == cntr['Country'] %}
+    <a class="col-2 tour " href="{{ url_for('Dota_Player', idplayer = player['idPlayer']) }}">
+      <figure class="touri">
+        {% if player['ImgSrc'] != none %}
+          <div class="im" width="100%" style="height: 150px;">
+            <div id="bb-players">
+              <img src="{{player['ImgSrc']}}" style="object-fit: contain;" width="100%"  height="150px">
+            </div>
+          </div>
+        {% else%}
+          <div class="im" width="100%" style="height: 150px;">
+            <img src="https://static.cybersport.ru/assets/img/player.187f655.png" style="object-fit: contain;" width="100%" height="150px" >
+          </div>
+        {% endif %}
+        <figcaption class="tc text-center">
+          {% if player['FirstName'] != none %}
+            <b> < {{player['Nickname']}} ><br>{{ player['FirstName'] }} {{ player['SecondName'] }}</b>
+          {% else%}
+            <b>{{player['Nickname']}}<br></b>
+          {% endif %}
+          
+        </figcaption>
+      </figure>
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content%}
